@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="/public/stylesheets/bootstrap.min.css">
+    <script src="/public/javascripts/jquery-3.2.1.slim.min.js"></script>
+    <script src="/public/javascripts/popper.min.js"></script>
+    <script src="/public/javascripts/bootstrap.min.js"></script>
+	<script src="/public/javascripts/jquery.table.hpaging.min.js"></script>
+	<script src="/public/javascripts/jquery-ui.js"></script>
+    <script src="/public/javascripts/clickActions.js"></script>
+</head>
+
+<body class="bg-light">
+    <div class="container">
+        <h3>A demo of Bootstrap navbar</h3>
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-info ">
+            <a class="navbar-brand text-light" href="/">
+                <i>ShopXpress</i>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#demo-navbar" aria-controls="demo-navbar"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="demo-navbar">
+                {{!-- Left Nav bar --}}
+                <ul class="navbar-nav mr-auto">
+                    {{!-- Show Search bar --}}
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" id="searchtext" type="search" placeholder="Search Products" aria-label="Search">
+                        <button class="btn btn-outline-warning my-2 my-sm-0" onclick="search();return false;">Search</button>
+                    </form>
+                </ul>
+
+                {{!-- Right Nav bar --}}
+                <ul class="navbar-nav mr-sm-2">
+                    {{!-- Show Export Options --}}
+                    <li class="nav-item dropdown">
+                        {{!-- data-toggle="dropdown"  --}}
+                        <a class="nav-link dropdown-toggle text-light" href="#" id="mnuExport" role="button" aria-haspopup="true"
+                            aria-expanded="false" data-toggle="dropdown">
+                            Export Products Data
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="mnuExport">
+                            {{!-- Export Products - XML Format --}}
+                            <a class="dropdown-item" href="/product/export/xml">List - XML Format</a>
+                            <hr>
+                            {{!-- Export Products - JSON Format --}}
+                            <a class="dropdown-item" href="/product/export/json">List - JSON Format</a>
+                            <hr>
+                            {{!-- Export By Name --}}
+                            <a class="dropdown-item" href="#" id="itemExportByName">
+                                <form>
+                                    <fieldset>
+                                        <legend>By Name</legend>
+                                        <div class="dropdown-item">
+                                            <input type="text" id="prodnameXML" placeholder="by name"><br><br>
+                                            <input type="radio" id="optByNameXML" name="formatName" value="XML">XML
+                                            &nbsp;
+                                            <input type="radio" id="optByNameJSON" name="formatName" value="JSON">JSON
+                                            <button onclick="exportByName();return false;">Go</button>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </a>
+                            <hr>
+                            {{!-- Export By Price Range --}}
+                            <a class="dropdown-item" href="#" id="itemExportByRange">
+                                <div class="dropdown-item">
+                                    <form>
+                                        <fieldset>
+                                            <legend>By Price Range</legend>
+                                                <input type="number" id="startRange" placeholder="start range"><br><br>
+                                                <input type="number" id="endRange" placeholder="end range"><br><br>
+                                                <input type="radio" id="optByRangeXML" name="formatRange" value="XML">XML
+                                                &nbsp;
+                                                <input type="radio" id="optByRangeJSON" name="formatRange" value="JSON">JSON
+                                                <button onclick="exportByRange();return false;">Go</button>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        &nbsp;
+                    </li>
+
+                    <li class="nav-item">
+                        &nbsp;
+                    </li>
+
+                    <li class="nav-item">
+                        &nbsp;
+                    </li>
+
+                    {{!-- Show User Options --}}
+                    {{#if req.session.currentUser}}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="mnuUserOptions" role="button" 
+                                data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">Welcome {{req.session.currentUser.firstName}} {{req.session.currentUser.lastName}}
+                                <img src="/public/images/signed-in.ico" style="width:32px;height:32px">
+
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="mnuUserOptions">
+                                {{!-- Show Admin Options --}}
+                                {{#if req.session.isAdminUser}}
+                                    <a class="dropdown-item" href="/product/manager">Product Manager</a>
+                                    <a class="dropdown-item" href="/user/manager">Customer Manager</a>
+                                {{else}}
+                                    <a class="dropdown-item" href="/user/orders/{{req.session.currentUser._id}}">My Orders</a>
+                                {{/if}}
+                                <hr>
+                                <a class="dropdown-item" href="/user/signout">Sign out</a>
+                            </div>
+                        </li>
+                    {{else}}
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-item" href="/user/signin">
+                                <img src="/public/images/signed-out.ico" style="width:32px;height:32px" title="Sign in">
+                            </a>
+                        </li>
+                    {{/if}}
+
+                    {{!-- Show Cart --}}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-item" href="cart/view">
+                        <img src=
+                            {{#if req.session.currentCart.cartTotalItems}}
+                                "/public/images/cart-full.png"
+                            {{else}}
+                                "/public/images/cart-empty.png"
+                            {{/if}} 
+                            title="Shopping cart has {{#if req.session.currentCart.cartTotalItems}}{{req.session.currentCart.cartTotalItems}} {{else}}0 {{/if}}item(s)">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        &nbsp;
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        {{!-- Bootstrap 4 Alerts --}}
+        <div class="container-fluid" style="margin-top:80px">
+            <div class="container">
+                {{#if alert_success}}
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong> {{alert_success}}
+                </div>
+                {{/if}}
+                {{#if alert_warning}}
+                <div class="alert alert-warning  alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Warning!</strong> {{alert_warning}}
+                </div>
+                {{/if}}
+            </div>
+
+            {{{body}}}
+        </div>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <!-- form card login -->
+                    <div class="card rounded-0">
+                        <div class="card-header">
+                            <h3 class="mb-0">{{title}}</h3>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" action="/product/add" class="form" role="form" autocomplete="off" id="formLogin" novalidate="">
+                                <table class="table table-condensed">
+                                    <tbody>
+                                        <tr>
+                                            <th>Product Name:</th>
+                                            <td>
+                                                <input type="text" name="productName" size="30">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Product Description:</th>
+                                            <td>
+                                                <input type="text" name="productDescription" size="30">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Image Path:</th>
+                                            <td>
+                                                <input type="text" name="imagePath" id="imagePath" value="{{product.imagePath}}" readonly>
+                                                <input type="file" id="uploadImage" onchange="upload();" value="{{product.imagePath}}">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Price:</th>
+                                            <td>
+                                                <input type="number" name="productPrice" size="30">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Quantity:</th>
+                                            <td>
+                                                <input type="number" name="productQuantity" size="30">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfooter>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <input type="submit" value="Save" class="btn btn-success">
+                                                <input type="button" value="Cancel" class="btn btn-danger" class="cancel" onclick="cancelAdd()">
+                                            </td>
+                                        </tr>
+                                    </tfooter>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

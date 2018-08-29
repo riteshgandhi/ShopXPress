@@ -1,0 +1,83 @@
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-15 mx-auto">
+          <div class="card rounded-0">
+            <div class="card-header">
+              <h3 class="mb-0">{{title}}</h3>
+            </div>
+            <div class="card-body">
+                <table style="width: 100%">
+                    <tr>
+                        <td>
+                            <p style="float: left">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <label>Page Limit:</label>
+                                            <input id="pglmt" placeholder="Page Limit" title="Page Limit" value="5" type="number" />
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-success" id="btnApply">Apply</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
+                        </td>
+                        <td>
+                            <p style="float:right">
+                                <button class="btn btn-success" onClick="addProduct();">Add Product</button>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                <table class="table table-striped  table-hover" id="tblProductList">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Description</th>
+                            <th>Image Path</th>
+                            <th>Price</th>
+                            <th>Quantity in Stock</th>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each productList}}
+                        <tr>
+                            <td>{{this.productName}}</td>
+                            <td>{{this.productDescription}}</td>
+                            <td>{{this.imagePath}}</td>
+                            <td>{{this.productPrice}}</td>
+                            <td>{{this.productQuantity}}</td>
+                            <td>
+                                <a href="/product/edit/{{this.id}}">Edit</a>
+                            </td>
+                            <td>
+                                <a href="/product/delete/{{this.id}}">Delete</a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#tblProductList").hpaging({ "limit": 5 });
+    });
+    $("#btnApply").click(function () {
+        let lmt = $("#pglmt").val();
+        if (lmt > 0) {
+            $("#tblProductList").hpaging("newLimit", lmt);
+        }
+    });
+</script>

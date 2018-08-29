@@ -1,0 +1,70 @@
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-10 mx-auto">
+          <div class="card rounded-0">
+            <div class="card-header">
+              <h3 class="mb-0">{{title}}</h3>
+            </div>
+            <div class="card-body">
+                <table style="width: 100%">
+                    <tr>
+                        <td>
+                            <p style="float: left">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <label>Page Limit:</label>
+                                            <input id="pglmt" placeholder="Page Limit" title="Page Limit" value="5" type="number" />
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-success" id="btnApply">Apply</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="table table-striped table-hover" id="tblCutomerList">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>User Name</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each customerList}}
+                        <tr>
+                            <td>{{this.firstName}}</td>
+                            <td>{{this.lastName}}</td>
+                            <td>{{this.userName}}</td>
+                            <td>
+                                <a href="/user/orders/{{this.id}}">View Orders</a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#tblCutomerList").hpaging({ "limit": 5 });
+    });
+    $("#btnApply").click(function () {
+        let lmt = $("#pglmt").val();
+        if (lmt > 0) {
+            $("#tblCutomerList").hpaging("newLimit", lmt);
+        }
+    });
+</script>

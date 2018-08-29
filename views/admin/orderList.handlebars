@@ -1,0 +1,45 @@
+<p style="text-align: center">
+    <h3>Orders for Customer:  {{custName}}</h3>
+</p>
+<div class="product-page">
+    <div class="product-form-admin">
+        {{#each orderList}}
+        <table class="table table-striped" id="tblcustOrders">
+            <thead>
+                <tr>
+                    <th>Order Date:</th>
+                    <th>{{this.orderDate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <table class="table table-striped" id="tblOrderItems">
+                    <thead>
+                        <tr>
+                            <th style="width:60%; text-align: left">Product Name</th>
+                            <th style="width:20%; text-align: right" >Quantity</th>
+                            <th style="width:20%; text-align: right">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each this.orderItems.cartItems}}
+                                <tr>
+                                    <td style="width:60%; text-align: left">{{this.productName}}</td>
+                                    <td style="width:20%; text-align: right">{{this.quantity}}</td>
+                                    <td style="width:20%; text-align: right">{{applyNumberFormat this.price}}</td>
+                                </tr>
+                        {{/each}}
+                    </tbody>
+                    <tfoot>
+                        <tr style="border-top: solid; border-bottom: double">
+                            <td style="width:60%; text-align: left"><strong>Order Total:</strong></td>
+                            <td style="width:20%; text-align: right">{{this.orderItems.cartTotalItems}}</td>
+                            <td style="width:20%; text-align: right">{{applyNumberFormat this.orderItems.cartTotal}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </tbody>
+        </table>
+        <hr>
+        {{/each}}
+    </div>
+</div>

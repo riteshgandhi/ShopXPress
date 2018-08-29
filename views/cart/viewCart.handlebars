@@ -1,0 +1,92 @@
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-10 mx-auto">
+          <div class="card rounded-0">
+            <div class="card-header">
+              <h3 class="mb-0">{{title}}</h3>
+            </div>
+            <div class="card-body">
+                <table style="width: 100%">
+                    <tr>
+                        <td>
+                            <p style="float: left">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <label>Page Limit:</label>
+                                            <input id="pglmt" placeholder="Page Limit" title="Page Limit" value="5" type="number" />
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-success" id="btnApply">Apply</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
+                        </td>
+                        <td>
+                            <p style="float:right">
+                                {{#if req.session.currentUser}}
+                                    <button class="btn btn-success" onClick="checkOut();">Checkout</button>
+                                {{else}}
+                                    <button class="btn btn-success" onClick="signinToCheckOut();">Sign in to Checkout</button>
+                                {{/if}}
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="table table-striped" id="tblCart">
+                    <thead>
+                        <tr>
+                            <th style="width: 55%; text-align: left">Product Name</th>
+                            <th style="width: 15%; text-align: right">Quantity</th>
+                            <th style="width: 15%; text-align: right">Price</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each cart.cartItems}}
+                        <tr>
+                            <td style="width: 55%; text-align: left">{{this.productName}}</td>
+                            <td style="width: 15%; text-align: right">{{this.quantity}}</td>
+                            <td style="width: 15%; text-align: right">{{applyNumberFormat this.price}}</td>
+                            <td style="width: 15%">
+                                <a href="/cart/remove/{{this.productID}}">Remove</a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <table class="table table-striped" id="tblCart">
+                    <tbody>
+                        <tr>
+                            <td style="width: 55%; text-align: left"><b>Cart Total:</b></td>
+                            <td style="width: 15%; text-align: right">{{cart.cartTotalItems}}</td>
+                            <td style="width: 15%; text-align: right">{{applyNumberFormat cart.cartTotal}}</td>
+                            <td style="width: 15%">
+                                <a href="/cart/removeall">Remove All</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#tblCart").hpaging({ "limit": 5 });
+    });
+    $("#btnApply").click(function () {
+        let lmt = $("#pglmt").val();
+        if (lmt > 0) {
+            $("#tblCart").hpaging("newLimit", lmt);
+        }
+    });
+</script>
