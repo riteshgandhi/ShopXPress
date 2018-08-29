@@ -3,7 +3,7 @@ To Load Data
 Run seeder.js file from 'seeder\' folder to load initial data
 
 
-To Run the Web Side
+To Run the Website
 ===================
 Run server.js from the root folder
 
