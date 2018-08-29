@@ -20,8 +20,3 @@ Standard User 1
 ================
 username:	riteshg
 password:	password
-
-Standard User 2
-================
-username:	johnw
-password:	password
