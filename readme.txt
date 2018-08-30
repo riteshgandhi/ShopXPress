@@ -3,7 +3,7 @@ To Load Data
 Run seeder.js file from 'seeder\' folder to load initial data
 
 
-To Run the Web Side
+To Run the Website
 ===================
 Run server.js from the root folder
 
@@ -21,7 +21,8 @@ Standard User 1
 username:	riteshg
 password:	password
 
-Standard User 2
-================
-username:	johnw
-password:	password
+
+
+Credits
+=======
+ShoppingCart Schema - https://github.com/mschwarzmueller/nodejs-shopping-cart-tutorial
