@@ -14,39 +14,50 @@ const bodyParser    = require("body-parser");               // body-parser
 const routes        = require('./routes');                  // Routing module
 const compression   = require('compression');
 
-app.set('view engine', 'handlebars');                       // set view engine
+/**
+ * Configures the middleware pipeline
+ */
+const configure = () => {
+    app.set('view engine', 'handlebars');                       // set view engine
 
-app.engine('handlebars', handlebars({                       // set handlebar helper
-    defaultLayout: 'master',
-    helpers: require('./helpers') 
-}));
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(session({secret: "ShopXpress_secret", resave:false, saveUninitialized:true}));
-app.use('/public', express.static(__dirname + "/public"));
-app.use(flash());
-app.use(compression()); //Compress all routes
-
-// set request object in res.locals
-app.use((req, res,next) => {
-    res.locals.req = req;
-    next();
-})
-
-app.use('/', routes);                                       // configure routes                                           
+    app.engine('handlebars', handlebars({                       // set handlebar helper
+        defaultLayout: 'master',
+        helpers: require('./helpers') 
+    }));
+    
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.json());
+    app.use(session({secret: "ShopXpress_secret", resave:false, saveUninitialized:true}));
+    app.use('/public', express.static(__dirname + "/public"));
+    app.use(flash());
+    app.use(compression()); //Compress all routes
+    
+    // set request object in res.locals
+    app.use((req, res,next) => {
+        res.locals.req = req;
+        next();
+    })
+    
+    app.use('/', routes);                                       // configure routes                                           
+    
+    /**
+     * Return 404 View
+     */
+    app.use((req, res) => {
+        res.status(404);
+        res.render('others/404');
+    });    
+};
 
 /**
- * Return 404 View
+ * Entry point for the application
  */
-app.use((req, res) => {
-    res.status(404);
-    res.render('others/404');
-});
+const startServer = () => {
+    configure();
 
-/**
- * Start the Server on port 3000
- */
-const server = app.listen(3000, () => {
-    console.log('http://localhost:3000');
-})
+    app.listen(3000, () => {
+        console.log('http://localhost:3000');
+    });
+};
+
+startServer();
