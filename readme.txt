@@ -20,3 +20,9 @@ Standard User 1
 ================
 username:	riteshg
 password:	password
+
+
+
+Credits
+=======
+ShoppingCart Schema - https://github.com/mschwarzmueller/nodejs-shopping-cart-tutorial
